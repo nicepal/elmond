@@ -1,0 +1,139 @@
+/* Launch Course Sections Styling */
+.new-launch-courses {
+    background: linear-gradient(135deg, 
+        rgba(var(--base-color-rgb), 0.05) 0%, 
+        rgba(var(--secondary-color-rgb), 0.05) 100%);
+}
+
+.upcoming-courses {
+    background: #fff;
+}
+
+/* Launch Badges */
+.launch-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.launch-badge.new-launch {
+    background: linear-gradient(135deg, #{{ $general->base_color }}, #{{ $general->secondary_color }});
+    box-shadow: 0 4px 15px rgba({{ hexdec(substr($general->base_color, 1, 2)) }}, {{ hexdec(substr($general->base_color, 3, 2)) }}, {{ hexdec(substr($general->base_color, 5, 2)) }}, 0.3);
+}
+
+.launch-badge.upcoming {
+    background: linear-gradient(135deg, #ff6b35, #f7931e);
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+}
+
+.launch-badge i {
+    font-size: 10px;
+}
+
+/* Launch Date Styling */
+.launch-date {
+    color: #{{ $general->base_color }};
+    font-size: 13px;
+    font-weight: 500;
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.launch-date.upcoming-date {
+    color: #ff6b35;
+}
+
+.launch-date i {
+    font-size: 12px;
+}
+
+/* Section Headers */
+.section-header {
+    margin-bottom: 50px;
+}
+
+.section-title {
+    color: #{{ $general->base_color }};
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.section-desc {
+    color: #666;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* Enhanced Card Hover Effects */
+.base-card {
+    transition: all 0.3s ease;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.base-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.new-launch-courses .base-card:hover {
+    box-shadow: 0 15px 40px rgba({{ hexdec(substr($general->base_color, 1, 2)) }}, {{ hexdec(substr($general->base_color, 3, 2)) }}, {{ hexdec(substr($general->base_color, 5, 2)) }}, 0.2);
+}
+
+.upcoming-courses .base-card:hover {
+    box-shadow: 0 15px 40px rgba(255, 107, 53, 0.2);
+}
+
+/* Button Styling */
+.btn--base {
+    background: linear-gradient(135deg, #{{ $general->base_color }}, #{{ $general->secondary_color }});
+    /* border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease; */
+}
+
+.btn--base:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba({{ hexdec(substr($general->base_color, 1, 2)) }}, {{ hexdec(substr($general->base_color, 3, 2)) }}, {{ hexdec(substr($general->base_color, 5, 2)) }}, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .section-desc {
+        font-size: 1rem;
+    }
+    
+    .launch-badge {
+        font-size: 11px;
+        padding: 5px 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .py-120 {
+        padding: 60px 0;
+    }
+}

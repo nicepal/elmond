@@ -1,0 +1,165 @@
+@extends($activeTemplate . 'layouts.master')
+@section('content')
+    <div class="body-wrapper">
+        <div class="table-content">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class=" mt-0 ">
+                        <div class="row gy-4">
+                            <div class="col-12">
+                                <!-- Course List -->
+                                <div class="base--card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="card-title">@lang('Selected Courses')</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        @foreach($courses as $course)
+                                            <div class="d-flex justify-content-between align-items-center mb-3 p-3 border rounded">
+                                                <div>
+                                                    <h6 class="mb-1">{{ $course->name }}</h6>
+                                                    <small class="text-muted">{{ $course->category->name ?? 'N/A' }}</small>
+                                                </div>
+                                                <div class="text-end">
+                                                    @if($course->discount)
+                                                        <span class="text-decoration-line-through text-muted">{{ showAmount($course->price) }} {{ $general->cur_text }}</span><br>
+                                                        <span class="fw-bold text-success">{{ showAmount(priceCalculate($course->price, $course->discount)) }} {{ $general->cur_text }}</span>
+                                                    @else
+                                                        <span class="fw-bold">{{ showAmount($course->price) }} {{ $general->cur_text }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        <hr>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h5 class="mb-0">@lang('Total Amount')</h5>
+                                            <h5 class="mb-0 text-primary">{{ showAmount($totalPrice) }} {{ $general->cur_text }}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Payment Form -->
+                                <div class="base--card">
+                                    <div class="card-header">
+                                        <h5 class="card-title">@lang('Payment Details')</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <form action="{{ route('user.deposit.insert') }}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="method_code">
+                                            @foreach($courses as $course)
+                                                <input type="hidden" name="course_ids[]" value="{{ $course->id }}">
+                                            @endforeach
+                                            <input type="hidden" name="currency">
+                                            <div class="">
+                                                <div class="form-group mb-4">
+                                                    <label class="form--label">@lang('Select Gateway')</label>
+                                                    <select class="form-control form--control" name="gateway" required>
+                                                        <option value="">@lang('Select One')</option>
+                                                        @foreach ($gatewayCurrency ?? [] as $data)
+                                                            <option value="{{ @$data->method_code }}"
+                                                                @selected(old('gateway') == $data->method_code) data-gateway="{{ $data }}">
+                                                                {{ $data->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label class="form--label">@lang('Amount')</label>
+                                                    <div class="input-group ">
+                                                        <input type="number" step="any" name="amount"
+                                                            class="form-control form--control"
+                                                            value="{{ $totalPrice }}" autocomplete="off"
+                                                            required readonly>
+                                                        <span class="input-group-text bg--base text-white border-0">{{ @$general->cur_text }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="preview-details d-none">
+                                                    <span>@lang('Limit')</span>
+                                                    <span><span class="min fw-bold">0</span> {{__($general->cur_text)}} - <span
+                                                            class="max fw-bold">0</span> {{__($general->cur_text)}} , </span>
+                                                    <span>@lang('Charge')</span>
+                                                    <span><span class="charge fw-bold">0</span> {{__($general->cur_text)}} ,</span>
+                                                    <span>@lang('Payable')</span> <span><span class="payable fw-bold"> 0</span>
+                                                        {{__($general->cur_text)}} </span>
+                                                </div>
+                                                <button type="submit"
+                                                    class="btn--base button w-100 mt-3 p-2">@lang('Submit')</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@push('script')
+    <script>
+        (function($) {
+            "use strict";
+            $('select[name=gateway]').on('change',function() {
+                if (!$('select[name=gateway]').val()) {
+                    $('.preview-details').addClass('d-none');
+                    return false;
+                }
+                var resource = $('select[name=gateway] option:selected').data('gateway');
+                var fixed_charge = parseFloat(resource.fixed_charge);
+                var percent_charge = parseFloat(resource.percent_charge);
+                var rate = parseFloat(resource.rate)
+                if (resource.method.crypto == 1) {
+                    var toFixedDigit = 8;
+                    $('.crypto_currency').removeClass('d-none');
+                } else {
+                    var toFixedDigit = 2;
+                    $('.crypto_currency').addClass('d-none');
+                }
+                $('.min').text(parseFloat(resource.min_amount).toFixed(2));
+                $('.max').text(parseFloat(resource.max_amount).toFixed(2));
+                var amount = parseFloat($('input[name=amount]').val());
+                if (!amount) {
+                    amount = 0;
+                }
+                if (amount <= 0) {
+                    $('.preview-details').addClass('d-none');
+                    return false;
+                }
+                $('.preview-details').removeClass('d-none');
+                var charge = parseFloat(fixed_charge + (amount * percent_charge / 100)).toFixed(2);
+                $('.charge').text(charge);
+                var payable = parseFloat((parseFloat(amount) + parseFloat(charge))).toFixed(2);
+                $('.payable').text(payable);
+                var final_amo = (parseFloat((parseFloat(amount) + parseFloat(charge))) * rate).toFixed(
+                    toFixedDigit);
+                $('.final_amo').text(final_amo);
+                if (resource.currency != '{{ $general->cur_text }}') {
+                    var rateElement =
+                        `<span class="fw-bold">@lang('Conversion Rate')</span> <span><span  class="fw-bold">1 {{ __($general->cur_text) }} = <span class="rate">${rate}</span>  <span class="base-currency">${resource.currency}</span></span></span>`;
+                    $('.rate-element').html(rateElement)
+                    $('.rate-element').removeClass('d-none');
+                    $('.in-site-cur').removeClass('d-none');
+                    $('.rate-element').addClass('d-flex');
+                    $('.in-site-cur').addClass('d-flex');
+                } else {
+                    $('.rate-element').html('')
+                    $('.rate-element').addClass('d-none');
+                    $('.in-site-cur').addClass('d-none');
+                    $('.rate-element').removeClass('d-flex');
+                    $('.in-site-cur').removeClass('d-flex');
+                }
+                $('.base-currency').text(resource.currency);
+                $('.method_currency').text(resource.currency);
+                $('input[name=currency]').val(resource.currency);
+                $('input[name=method_code]').val(resource.method_code);
+                $('input[name=amount]').on('input');
+            });
+            $('input[name=amount]').on('input', function() {
+                $('select[name=gateway]').change();
+                $('.amount').text(parseFloat($(this).val()).toFixed(2));
+            });
+        })(jQuery);
+    </script>
+@endpush

@@ -1,0 +1,342 @@
+/* Write your css codes here */
+.header-wrapper .logo-wrapper img{
+max-width: 100px !important;
+}
+
+.login-left-section .content-wrap .logo-wrap img{
+max-width: 70% !important;
+}
+
+/* Contact Page Improvements */
+.contact-section {
+    padding: 80px 0;
+}
+
+.contact-card {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    height: 100%;
+    background: #fff;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+.contact-card.card-left {
+    padding: 40px;
+    background: linear-gradient(135deg, hsl(var(--base) / 0.05), hsl(var(--secondary) / 0.05));
+    border-left: 4px solid hsl(var(--base));
+}
+
+.contact-right-side .title {
+    font-size: 28px;
+    margin-bottom: 30px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.contact-right-side .title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, hsl(var(--base)), hsl(var(--secondary)));
+    border-radius: 3px;
+}
+
+.contact-right-side ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px;
+}
+
+.contact-right-side ul li {
+    display: flex;
+    margin-bottom: 25px;
+    align-items: flex-start;
+}
+
+.contact-right-side .icon-wrap {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: hsl(var(--base) / 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: hsl(var(--base));
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.contact-right-side ul li:hover .icon-wrap {
+    background: hsl(var(--base));
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.contact-right-side .content-wrap .title {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: hsl(var(--body-color) / 0.7);
+    padding-bottom: 0;
+}
+
+.contact-right-side .content-wrap .title::after {
+    display: none;
+}
+
+.contact-right-side .content-wrap h6 {
+    font-size: 16px;
+    font-weight: 500;
+    color: hsl(var(--heading-color));
+    margin: 0;
+    transition: color 0.3s ease;
+}
+
+.contact-right-side ul li:hover .content-wrap h6 {
+    color: hsl(var(--base));
+}
+
+.contact-right-side .description {
+    line-height: 1.7;
+    color: hsl(var(--body-color) / 0.8);
+}
+
+/* Form Styling */
+.form--control {
+    border: 1px solid hsl(var(--border-color));
+    border-radius: 8px;
+    padding: 12px 15px;
+    transition: all 0.3s ease;
+    background: #fff;
+}
+
+.form--control:focus {
+    border-color: hsl(var(--base));
+    box-shadow: 0 0 0 3px hsl(var(--base) / 0.1);
+}
+
+.form--label {
+    font-weight: 500;
+    color: hsl(var(--heading-color));
+}
+
+.btn--base-3 {
+    background: hsl(var(--base));
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn--base-3::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: hsl(var(--secondary));
+    transition: all 0.4s ease;
+    z-index: -1;
+}
+
+.btn--base-3:hover::before {
+    left: 0;
+}
+
+/* Testimonial Section Improvements - Scoped to #testimonial-section-custom */
+/* Height reduction already implemented */
+#testimonial-section-custom.pt-90 {
+    padding-top: 90px; /* Reduced from 120px */
+}
+
+#testimonial-section-custom .testimonial-wrap-reduced {
+    padding: 60px 0px; /* Reduced padding */
+}
+
+@media (max-width: 992px) {
+    #testimonial-section-custom.pt-90 {
+        padding-top: 75px; /* Responsive reduction */
+    }
+}
+
+@media (max-width: 576px) {
+    #testimonial-section-custom.pt-90 {
+        padding-top: 60px; /* Further reduction on mobile */
+    }
+}
+
+#testimonial-section-custom .testimonial-wrap-reduced {
+    padding: 60px 0px;
+}
+
+/* Section Title Styling */
+#testimonial-section-custom .section-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: hsl(var(--heading-color));
+    margin-bottom: 15px;
+}
+
+#testimonial-section-custom .section-subtitle {
+    font-size: 1.1rem;
+    color: hsl(var(--body-color) / 0.7);
+    margin-bottom: 0;
+}
+
+/* Testimonial Slider Container */
+#testimonial-section-custom .testimonial-slider-container {
+    position: relative;
+}
+
+/* Custom Arrow Styling */
+#testimonial-section-custom .testimonial-arrows {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    z-index: 10;
+    pointer-events: none;
+    transform: translateY(-50%);
+}
+
+#testimonial-section-custom .testimonial-prev,
+#testimonial-section-custom .testimonial-next {
+    position: absolute;
+    top: 0;
+    width: 50px;
+    height: 50px;
+    background: hsl(var(--base));
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    pointer-events: all;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    outline: none;
+}
+
+#testimonial-section-custom .testimonial-prev {
+    left: -25px;
+}
+
+#testimonial-section-custom .testimonial-next {
+    right: -25px;
+}
+
+#testimonial-section-custom .testimonial-prev:hover,
+#testimonial-section-custom .testimonial-next:hover {
+    background: hsl(var(--secondary));
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+#testimonial-section-custom .testimonial-prev:active,
+#testimonial-section-custom .testimonial-next:active {
+    transform: scale(0.95);
+}
+
+/* Slick Dots Styling */
+#testimonial-section-custom .testimonial-slider .slick-dots {
+    bottom: -50px;
+}
+
+#testimonial-section-custom .testimonial-slider .slick-dots li button:before {
+    color: hsl(var(--base));
+    font-size: 12px;
+}
+
+#testimonial-section-custom .testimonial-slider .slick-dots li.slick-active button:before {
+    color: hsl(var(--base));
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #testimonial-section-custom .testimonial-prev {
+        left: -15px;
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    #testimonial-section-custom .testimonial-next {
+        right: -15px;
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    #testimonial-section-custom .section-title {
+        font-size: 2rem;
+    }
+    
+    #testimonial-section-custom .section-subtitle {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    #testimonial-section-custom .testimonial-prev,
+    #testimonial-section-custom .testimonial-next {
+        display: none;
+    }
+}
+
+/* Cart Icon Styles */
+.cart-icon-wrapper {
+    position: relative;
+}
+
+.cart-link {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.cart-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.cart-count {
+    background-color: #ff4757;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 5px;
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.cart-count.empty {
+    display: none;
+}
